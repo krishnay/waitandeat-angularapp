@@ -24,6 +24,10 @@ angular
         templateUrl: 'partials/waitlist.html',
         controller: 'WaitlistController'
       })
+      .when('/register', {
+        templateUrl: 'partials/register.html',
+        controller: 'AuthController'
+      })
       .otherwise({
         redirectTo: '/'
       });

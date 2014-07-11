@@ -27,17 +27,17 @@
 		</tr>
 	</thead>
 	<tr ng-repeat="p in parties | orderByPriority">
-	  <td><input type="checkbox"></td>
+	  <td><input ng-model="p.done" ng-change="parties.$save(party.$id)" type="checkbox"></td>
 	  <td>
 	  	<div><strong>{{p.name}} ({{p.size}} people)</strong></div>
 	  	<div>{{p.phone}}</div>
 	  	<div>
-	  		<!-- TODO:Add Date Later -->
+	  		<!-- Add date -->
 	  	</div>
 	  </td>
 	  <td>
 	  	<div>
-	  		<!-- TODO: Add Party Notifier -->
+	  		{{p.notified}}
 	  	</div>
 	  </td>
 	  <td>

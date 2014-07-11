@@ -9,16 +9,28 @@ angular.module('myApp.controllers', [])
 
              $scope.parties = $firebase(partiesRef);
 
-             $scope.party = {name : '', phone : '', size : ''};
+             $scope.party = {name : '', phone : '', size : '', done: false, notified: 'No'};
 
              $scope.saveParty = function() {
                $scope.parties.$add($scope.party);
-               $scope.party = {name : '', phone : '', size : ''};
+               $scope.party = {name : '', phone : '', size : '', done: false, notified: 'No'};
              };
              
-             $scope.sendTextMessage = function(phoneNumber){
+             $scope.sendTextMessage = function(party){
                  var textMessageRef = new Firebase('https://waitandeat-krishna.firebaseio.com/textMessages');
                  var textMessages = $firebase(textMessageRef);
-                 textMessages.$add({phoneNumber : phoneNumber});
+                 textMessages.$add({phoneNumber : party.phone});
+                 party.notified = 'Yes';
+                 $scope.parties.$save(party.$id);
              };
+        }])
+        .controller('AuthController', ['$scope', '$firebaseSimpleLogin', function($scope, $firebaseSimpleLogin){
+            var authRef = Firebase('https://waitandeat-krishna.firebaseio.com/');
+            var auth = $firebaseSimpleLogin(authRef);
+
+            $scope.user = {email : '', password: ''};
+
+            $scope.register = function(){
+                auth.$createUser($scope.user.email, $scope.user.password);
+            };
         }]);
